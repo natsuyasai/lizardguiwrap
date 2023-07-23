@@ -1,13 +1,16 @@
 package com.natsuyasai.lizardguiwrap.viewmodel
 
 
+import com.natsuyasai.lizardguiwrap.model.Format
+import com.natsuyasai.lizardguiwrap.model.Language
+import com.natsuyasai.lizardguiwrap.model.LizardCommandCreator
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import tornadofx.FXEvent
 import tornadofx.ViewModel
 
-class DirectorySelectEvent(val dir : String?) : FXEvent()
+class DirectorySelectEvent(val dir: String?) : FXEvent()
 class MainViewModel : ViewModel() {
 
     val filePath = SimpleStringProperty()
@@ -16,33 +19,34 @@ class MainViewModel : ViewModel() {
     val outputFileName = SimpleStringProperty("result")
 
     val languageItems: ObservableList<String> = FXCollections.observableArrayList(
-        "Auto",
-        "C/C++",
-        "Java",
-        "C#",
-        "JavaScript",
-        "TypeScript",
-        "Objective-C",
-        "Swift",
-        "Python",
-        "Ruby",
-        "TTCN-3",
-        "PHP",
-        "Scala",
-        "GDScript",
-        "Golang",
-        "Lua",
-        "Rust",
-        "Fortran",
-        "Kotlin",
-        "Solidity",
-        "Erlang"
+        Language.AUTO.langName,
+        Language.C.langName,
+        Language.CPP.langName,
+        Language.JAVA.langName,
+        Language.CSHARP.langName,
+        Language.JS.langName,
+        Language.TS.langName,
+        Language.OBJECTIVE_C.langName,
+        Language.SWIFT.langName,
+        Language.PYTHON.langName,
+        Language.RUBY.langName,
+        Language.TTCN_3.langName,
+        Language.PHP.langName,
+        Language.SCALA.langName,
+        Language.GDSCRIPT.langName,
+        Language.GO.langName,
+        Language.LUA.langName,
+        Language.RUST.langName,
+        Language.FORTRAN.langName,
+        Language.KOTLIN.langName,
+        Language.SOLIDITY.langName,
+        Language.ERLANG.langName
     )
 
     val formatItems: ObservableList<String> = FXCollections.observableArrayList(
-        "HTML",
-        "CSV",
-        "XML",
+        Format.HTML.typeName,
+        Format.CSV.typeName,
+        Format.XML.typeName
     )
 
     init {
@@ -53,7 +57,15 @@ class MainViewModel : ViewModel() {
     }
 
     fun execLizard() {
-        // TODO コマンド実行
-        // python -m lizard -l 選択した言語 -o 出力形式
+        // TODO
+        // pythonの指定は外部からできるようにしておく
+        val lizardCommand = LizardCommandCreator(selectedLanguage.value, selectedFormat.value, outputFileName.value)
+        val runtime = Runtime.getRuntime()
+        val command = arrayOf<String>("cmd", "/c", "python -m lizard ${lizardCommand.getOptions()}")
+        try {
+            runtime.exec(command)
+        } catch (ex: Exception) {
+            println(ex)
+        }
     }
 }
