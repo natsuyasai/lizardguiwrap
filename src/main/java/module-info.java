@@ -5,8 +5,12 @@ module com.natsuyasai.lizardguiwrap {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires tornadofx;
 
     opens com.natsuyasai.lizardguiwrap to javafx.fxml;
     exports com.natsuyasai.lizardguiwrap;
-    exports com.natsuyasai.lizardguiwrap.controller;
+    exports com.natsuyasai.lizardguiwrap.view;
+    exports com.natsuyasai.lizardguiwrap.viewmodel;
+    exports com.natsuyasai.lizardguiwrap.style;
+    //exports com.natsuyasai.lizardguiwrap.model;
 }

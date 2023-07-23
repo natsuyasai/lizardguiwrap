@@ -1,20 +1,30 @@
 package com.natsuyasai.lizardguiwrap
 
+import com.natsuyasai.lizardguiwrap.style.MainViewStyle
+import com.natsuyasai.lizardguiwrap.view.MainView
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
+import tornadofx.App
+import tornadofx.launch
+import tornadofx.reloadStylesheetsOnFocus
 
-class MainApplication : Application() {
+class MainApplication : App(MainView::class, MainViewStyle::class) {
+//    init {
+//        reloadStylesheetsOnFocus()
+//    }
+
     override fun start(stage: Stage) {
-        val fxmlLoader = FXMLLoader(MainApplication::class.java.getResource("main-view.fxml"))
-        val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
-        stage.title = "lizard gui wrap"
-        stage.scene = scene
-        stage.show()
+        with(stage) {
+            isResizable = false
+            minWidth = 500.0
+            minHeight = 310.0
+            super.start(this)
+        }
     }
 }
 
-fun main() {
-    Application.launch(MainApplication::class.java)
+fun main(args: Array<String>) {
+    launch<MainApplication>(args)
 }
