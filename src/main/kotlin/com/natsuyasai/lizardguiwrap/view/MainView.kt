@@ -4,6 +4,7 @@ import com.natsuyasai.lizardguiwrap.style.MainViewStyle
 import com.natsuyasai.lizardguiwrap.viewmodel.DirectorySelectEvent
 import com.natsuyasai.lizardguiwrap.viewmodel.MainViewModel
 import javafx.scene.Parent
+import javafx.scene.control.Alert
 import tornadofx.*
 
 class MainView : View("lizard gui wrap") {
@@ -66,7 +67,19 @@ class MainView : View("lizard gui wrap") {
                     button ("exec"){
                         addClass(MainViewStyle.footerButton)
                         action {
-                            viewModel.execLizard()
+                            if (viewModel.execLizard()) {
+                                alert(Alert.AlertType.INFORMATION,
+                                    "Result",
+                                    content = "Completed",
+                                    title = "Info",
+                                    owner = this@MainView.currentWindow)
+                            } else {
+                                alert(Alert.AlertType.INFORMATION,
+                                    "Result",
+                                    content = "Failed",
+                                    title = "Error",
+                                    owner = this@MainView.currentWindow)
+                            }
                         }
                     }
                 }

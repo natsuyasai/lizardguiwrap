@@ -56,16 +56,21 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun execLizard() {
+    fun execLizard(): Boolean {
         // TODO
         // pythonの指定は外部からできるようにしておく
+        // メッセージ表示
         val lizardCommand = LizardCommandCreator(selectedLanguage.value, selectedFormat.value, outputFileName.value)
         val runtime = Runtime.getRuntime()
         val command = arrayOf<String>("cmd", "/c", "python -m lizard ${lizardCommand.getOptions()}")
-        try {
-            runtime.exec(command)
+        return try {
+            val process = runtime.exec(command)
+            process.waitFor()
+            process.destroy()
+            true
         } catch (ex: Exception) {
             println(ex)
+            false
         }
     }
 }

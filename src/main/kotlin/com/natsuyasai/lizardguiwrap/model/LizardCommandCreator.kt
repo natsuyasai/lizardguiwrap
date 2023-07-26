@@ -21,12 +21,12 @@ class LizardCommandCreator(
             retOptionsStr += "-l ${langOpt} "
         }
         if (fileName != ""){
-            retOptionsStr += "-o ${fileName}${extension} "
+            retOptionsStr += "-o ${fileName}${extension}"
         }
         return retOptionsStr
     }
 
-    fun convertOptionForLanguage(): String {
+    private fun convertOptionForLanguage(): String {
         for (lang in Language.values()) {
             if (language == lang.langName) {
                 return lang.option
@@ -35,7 +35,7 @@ class LizardCommandCreator(
         return ""
     }
 
-    fun convertOptionForFormat(): String {
+    private fun convertOptionForFormat(): String {
         for (type in Format.values()) {
             if (format == type.typeName) {
                 return type.option
