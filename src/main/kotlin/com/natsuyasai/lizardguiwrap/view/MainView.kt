@@ -74,7 +74,7 @@ class MainView : View("lizard gui wrap") {
                                     title = "Info",
                                     owner = this@MainView.currentWindow)
                             } else {
-                                alert(Alert.AlertType.INFORMATION,
+                                alert(Alert.AlertType.ERROR,
                                     "Result",
                                     content = "Failed",
                                     title = "Error",

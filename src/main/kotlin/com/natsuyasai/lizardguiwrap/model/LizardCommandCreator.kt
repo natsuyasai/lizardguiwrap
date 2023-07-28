@@ -1,7 +1,5 @@
 package com.natsuyasai.lizardguiwrap.model
 
-import java.text.Normalizer.Form
-
 class LizardCommandCreator(
     private val language: String,
     private val format: String,
@@ -18,7 +16,7 @@ class LizardCommandCreator(
         }
         val langOpt = convertOptionForLanguage()
         if (langOpt != ""){
-            retOptionsStr += "-l ${langOpt} "
+            retOptionsStr += "-l $langOpt "
         }
         if (fileName != ""){
             retOptionsStr += "-o ${fileName}${extension}"

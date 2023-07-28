@@ -1,9 +1,7 @@
 package com.natsuyasai.lizardguiwrap.viewmodel
 
 
-import com.natsuyasai.lizardguiwrap.model.Format
-import com.natsuyasai.lizardguiwrap.model.Language
-import com.natsuyasai.lizardguiwrap.model.LizardCommandCreator
+import com.natsuyasai.lizardguiwrap.model.*
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -61,16 +59,7 @@ class MainViewModel : ViewModel() {
         // pythonの指定は外部からできるようにしておく
         // メッセージ表示
         val lizardCommand = LizardCommandCreator(selectedLanguage.value, selectedFormat.value, outputFileName.value)
-        val runtime = Runtime.getRuntime()
-        val command = arrayOf<String>("cmd", "/c", "python -m lizard ${lizardCommand.getOptions()}")
-        return try {
-            val process = runtime.exec(command)
-            process.waitFor()
-            process.destroy()
-            true
-        } catch (ex: Exception) {
-            println(ex)
-            false
-        }
+        val executor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
+        return executor.exec()
     }
 }
