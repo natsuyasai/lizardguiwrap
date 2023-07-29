@@ -20,7 +20,7 @@ class LizardCommandExecutor(
     private fun getTerminal(): String {
         return when {
             PlatformUtil.isWindows() -> "cmd"
-            PlatformUtil.isLinux() -> "sh"
+            PlatformUtil.isLinux() -> ""
             PlatformUtil.isMac() -> "sh"
             else -> "cmd"
         }
@@ -28,7 +28,7 @@ class LizardCommandExecutor(
     private fun getTerminalOption(): String {
         return when {
             PlatformUtil.isWindows() -> "/c"
-            PlatformUtil.isLinux() -> "-c"
+            PlatformUtil.isLinux() -> ""
             PlatformUtil.isMac() -> "-c"
             else -> "/c"
         }

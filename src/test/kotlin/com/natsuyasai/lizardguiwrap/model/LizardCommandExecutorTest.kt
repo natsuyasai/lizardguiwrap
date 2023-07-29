@@ -63,6 +63,6 @@ class LizardCommandExecutorTest {
 
         assertEquals(true, ret)
         verify(processExecutor, times(1))
-            .exec("sh", "-c", "command/basecommand.sh", "/home/src --html -o result.html")
+            .exec("", "", "command/basecommand.sh", "/home/src --html -o result.html")
     }
 }
