@@ -6,8 +6,8 @@ class LizardCommandExecutor(
     private val processExecutor: ExternalProcessExecutor,
     private val commandCreator: LizardCommandCreator) {
 
-    private val execFileNameForWindows = "basecommand.bat"
-    private val execFileNameForLinux = "basecommand.sh"
+    private val execFileNameForWindows = "command\\basecommand.bat"
+    private val execFileNameForLinux = "command/basecommand.sh"
 
     fun exec(): Boolean {
         return processExecutor.exec(

@@ -55,10 +55,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun execLizard(): Boolean {
-        // TODO
-        // pythonの指定は外部からできるようにしておく
-        // メッセージ表示
-        val lizardCommand = LizardCommandCreator(selectedLanguage.value, selectedFormat.value, outputFileName.value)
+        val lizardCommand = LizardCommandCreator(
+            selectedLanguage.value,
+            selectedFormat.value,
+            outputFileName.value)
         val executor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
         return executor.exec()
     }

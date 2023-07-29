@@ -12,5 +12,5 @@ module com.natsuyasai.lizardguiwrap {
     exports com.natsuyasai.lizardguiwrap.view;
     exports com.natsuyasai.lizardguiwrap.viewmodel;
     exports com.natsuyasai.lizardguiwrap.style;
-    //exports com.natsuyasai.lizardguiwrap.model;
+    exports com.natsuyasai.lizardguiwrap.model;
 }

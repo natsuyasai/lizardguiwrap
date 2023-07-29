@@ -2,13 +2,9 @@ package com.natsuyasai.lizardguiwrap
 
 import com.natsuyasai.lizardguiwrap.style.MainViewStyle
 import com.natsuyasai.lizardguiwrap.view.MainView
-import javafx.application.Application
-import javafx.fxml.FXMLLoader
-import javafx.scene.Scene
 import javafx.stage.Stage
 import tornadofx.App
 import tornadofx.launch
-import tornadofx.reloadStylesheetsOnFocus
 
 class MainApplication : App(MainView::class, MainViewStyle::class) {
 //    init {
