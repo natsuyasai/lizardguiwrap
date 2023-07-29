@@ -4,8 +4,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -21,33 +19,34 @@ class LizardCommandCreatorTest {
 
     @ParameterizedTest
     @CsvSource(value = [
-        "Auto,HTML,result,--html -o result.html ",
-        "Auto,CSV,result,--csv -o result.csv ",
-        "Auto,XML,result,--xml -o result.xml ",
-        "C,HTML,result,--html -l c -o result.html ",
-        "C++,HTML,result,--html -l cpp -o result.html ",
-        "Java,HTML,result,--html -l java -o result.html ",
-        "C#,HTML,result,--html -l csharp -o result.html ",
-        "JavaScript,HTML,result,--html -l javascript -o result.html ",
-        "TypeScript,HTML,result,--html -l typescript -o result.html ",
-        "Objective-C,HTML,result,--html -l objective-c -o result.html ",
-        "Swift,HTML,result,--html -l swift -o result.html ",
-        "Python,HTML,result,--html -l python -o result.html ",
-        "Ruby,HTML,result,--html -l ruby -o result.html ",
-        "TTCN-3,HTML,result,--html -l ttcn -o result.html ",
-        "PHP,HTML,result,--html -l php -o result.html ",
-        "Scala,HTML,result,--html -l scala -o result.html ",
-        "GDScript,HTML,result,--html -l GDScript -o result.html ",
-        "Golang,HTML,result,--html -l go -o result.html ",
-        "Lua,HTML,result,--html -l lua -o result.html ",
-        "Rust,HTML,result,--html -l rust -o result.html ",
-        "Fortran,HTML,result,--html -l fortran -o result.html ",
-        "Kotlin,HTML,result,--html -l kotlin -o result.html ",
-        "Solidity,HTML,result,--html -l solidity -o result.html ",
-        "Erlang,HTML,result,--html -l erlang -o result.html "
+        "C:\\Users\\user\\Desktop\\Src,Auto,HTML,result,C:\\Users\\user\\Desktop\\Src --html -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Auto,CSV,result,C:\\Users\\user\\Desktop\\Src --csv -o result.csv ",
+        "C:\\Users\\user\\Desktop\\Src,Auto,XML,result,C:\\Users\\user\\Desktop\\Src --xml -o result.xml ",
+        "C:\\Users\\user\\Desktop\\Src,C,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l c -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,C++,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l cpp -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Java,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l java -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,C#,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l csharp -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,JavaScript,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l javascript -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,TypeScript,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l typescript -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Objective-C,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l objective-c -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Swift,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l swift -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Python,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l python -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Ruby,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l ruby -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,TTCN-3,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l ttcn -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,PHP,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l php -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Scala,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l scala -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,GDScript,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l GDScript -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Golang,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l go -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Lua,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l lua -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Rust,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l rust -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Fortran,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l fortran -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Kotlin,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l kotlin -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Solidity,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l solidity -o result.html ",
+        "C:\\Users\\user\\Desktop\\Src,Erlang,HTML,result,C:\\Users\\user\\Desktop\\Src --html -l erlang -o result.html "
     ])
-    fun getOptions(language: String, format: String, fileName: String, expected: String) {
+    fun getOptions(folderPath: String, language: String, format: String, fileName: String, expected: String) {
         val target = LizardCommandCreator(
+            folderPath,
             language,
             format,
             fileName)

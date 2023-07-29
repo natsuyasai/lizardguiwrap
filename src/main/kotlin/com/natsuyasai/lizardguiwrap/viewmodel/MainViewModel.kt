@@ -56,6 +56,7 @@ class MainViewModel : ViewModel() {
 
     fun execLizard(): Boolean {
         val lizardCommand = LizardCommandCreator(
+            filePath.value,
             selectedLanguage.value,
             selectedFormat.value,
             outputFileName.value)

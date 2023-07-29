@@ -27,7 +27,7 @@ class LizardCommandExecutorTest {
     @Test
     fun Windows環境でのコマンド実行確認() {
         System.setProperty("os.name", "Windows")
-        val commandCreator = LizardCommandCreator("","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -35,13 +35,13 @@ class LizardCommandExecutorTest {
 
         assertEquals(true, ret)
         verify(processExecutor, times(1))
-            .exec("cmd", "/c", "basecommand.bat", "--html -o result.html")
+            .exec("cmd", "/c", "command\\basecommand.bat", "/home/src --html -o result.html")
     }
 
     @Test
     fun Mac環境でのコマンド実行確認() {
         System.setProperty("os.name", "Macos")
-        val commandCreator = LizardCommandCreator("","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -49,13 +49,13 @@ class LizardCommandExecutorTest {
 
         assertEquals(true, ret)
         verify(processExecutor, times(1))
-            .exec("sh", "-c", "basecommand.sh", "--html -o result.html")
+            .exec("sh", "-c", "command/basecommand.sh", "/home/src --html -o result.html")
     }
 
     @Test
     fun Linux環境でのコマンド実行確認() {
         System.setProperty("os.name", "Linux")
-        val commandCreator = LizardCommandCreator("","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -63,6 +63,6 @@ class LizardCommandExecutorTest {
 
         assertEquals(true, ret)
         verify(processExecutor, times(1))
-            .exec("sh", "-c", "basecommand.sh", "--html -o result.html")
+            .exec("sh", "-c", "command/basecommand.sh", "/home/src --html -o result.html")
     }
 }

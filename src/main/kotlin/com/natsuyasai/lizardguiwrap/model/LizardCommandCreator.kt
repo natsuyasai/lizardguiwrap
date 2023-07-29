@@ -1,13 +1,14 @@
 package com.natsuyasai.lizardguiwrap.model
 
 class LizardCommandCreator(
+    private val folderPath: String,
     private val language: String,
     private val format: String,
     private val fileName: String
 ) {
 
     fun getOptions(): String {
-        var retOptionsStr = ""
+        var retOptionsStr = "$folderPath "
         val formatOpt = convertOptionForFormat()
         var extension = ".txt"
         if (formatOpt != "") {
