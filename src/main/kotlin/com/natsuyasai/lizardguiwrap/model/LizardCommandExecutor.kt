@@ -21,7 +21,7 @@ class LizardCommandExecutor(
         return when {
             PlatformUtil.isWindows() -> "cmd"
             PlatformUtil.isLinux() -> ""
-            PlatformUtil.isMac() -> "sh"
+            PlatformUtil.isMac() -> ""
             else -> "cmd"
         }
     }
@@ -29,7 +29,7 @@ class LizardCommandExecutor(
         return when {
             PlatformUtil.isWindows() -> "/c"
             PlatformUtil.isLinux() -> ""
-            PlatformUtil.isMac() -> "-c"
+            PlatformUtil.isMac() -> ""
             else -> "/c"
         }
     }
