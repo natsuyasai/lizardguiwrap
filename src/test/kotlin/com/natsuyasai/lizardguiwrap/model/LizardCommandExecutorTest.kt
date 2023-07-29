@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.mockito.Mockito.mock
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 
 class LizardCommandExecutorTest {
 
@@ -31,14 +29,13 @@ class LizardCommandExecutorTest {
         System.setProperty("os.name", "Windows")
         val commandCreator = LizardCommandCreator("","HTML","result")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
-        whenever(processExecutor.exec(any(), any(), any())).thenReturn("")
+        whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
         val ret = target.exec()
 
         assertEquals(true, ret)
-//        verify(processExecutor).exec(org.mockito.kotlin.check {
-//            assertEquals("basecommand.bat --html -o result.html", it)
-//        })
+        verify(processExecutor, times(1))
+            .exec("cmd", "/c", "basecommand.bat", "--html -o result.html")
     }
 
     @Test
@@ -46,14 +43,13 @@ class LizardCommandExecutorTest {
         System.setProperty("os.name", "Macos")
         val commandCreator = LizardCommandCreator("","HTML","result")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
-        whenever(processExecutor.exec(any(), any(), any())).thenReturn("")
+        whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
         val ret = target.exec()
 
         assertEquals(true, ret)
-//        verify(processExecutor).exec(org.mockito.kotlin.check {
-//            assertEquals("basecommand.sh --html -o result.html", )
-//        })
+        verify(processExecutor, times(1))
+            .exec("sh", "-c", "basecommand.sh", "--html -o result.html")
     }
 
     @Test
@@ -61,13 +57,12 @@ class LizardCommandExecutorTest {
         System.setProperty("os.name", "Linux")
         val commandCreator = LizardCommandCreator("","HTML","result")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
-        whenever(processExecutor.exec(any(), any(), any())).thenReturn("")
+        whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
         val ret = target.exec()
 
         assertEquals(true, ret)
-//        verify(processExecutor).exec(org.mockito.kotlin.check {
-//            assertEquals("basecommand.sh --html -o result.html", it)
-//        })
+        verify(processExecutor, times(1))
+            .exec("sh", "-c", "basecommand.sh", "--html -o result.html")
     }
 }

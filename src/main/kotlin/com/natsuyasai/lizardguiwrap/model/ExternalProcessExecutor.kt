@@ -1,5 +1,5 @@
 package com.natsuyasai.lizardguiwrap.model
 
 interface ExternalProcessExecutor {
-    fun exec(terminal: String, command: String, option: String): Boolean
+    fun exec(terminal: String, terminalOption: String, execFileName: String, option: String): Boolean
 }
