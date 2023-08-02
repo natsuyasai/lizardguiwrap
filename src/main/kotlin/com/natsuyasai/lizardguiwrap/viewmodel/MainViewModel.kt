@@ -2,19 +2,19 @@ package com.natsuyasai.lizardguiwrap.viewmodel
 
 
 import com.natsuyasai.lizardguiwrap.model.*
-import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import tornadofx.FXEvent
-import tornadofx.ViewModel
+import tornadofx.ItemViewModel
 
 class DirectorySelectEvent(val dir: String?) : FXEvent()
-class MainViewModel : ViewModel() {
+class MainViewModel(private val parameters: FormParameters)
+    : ItemViewModel<FormParameters>(parameters) {
 
-    val filePath = SimpleStringProperty()
-    val selectedLanguage = SimpleStringProperty("Auto")
-    val selectedFormat = SimpleStringProperty("HTML")
-    val outputFileName = SimpleStringProperty("result")
+    val filePath = bind(FormParameters::filePathProperty)
+    val selectedLanguage = bind(FormParameters::selectedLanguageProperty)
+    val selectedFormat = bind(FormParameters::selectedFormatProperty)
+    val outputFileName = bind(FormParameters::outputFileNameProperty)
 
     val languageItems: ObservableList<String> = FXCollections.observableArrayList(
         Language.AUTO.langName,
@@ -50,16 +50,16 @@ class MainViewModel : ViewModel() {
     init {
         // フォルダ選択イベント
         subscribe<DirectorySelectEvent> {
-            filePath.value = it.dir
+            parameters.filePath = it.dir
         }
     }
 
     fun execLizard(): Boolean {
         val lizardCommand = LizardCommandCreator(
-            filePath.value,
-            selectedLanguage.value,
-            selectedFormat.value,
-            outputFileName.value)
+            parameters.filePath,
+            parameters.selectedLanguage,
+            parameters.selectedFormat,
+            parameters.outputFileName)
         val executor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
         return executor.exec()
     }

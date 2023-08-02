@@ -1,5 +1,6 @@
 package com.natsuyasai.lizardguiwrap.view
 
+import com.natsuyasai.lizardguiwrap.model.FormParameters
 import com.natsuyasai.lizardguiwrap.style.MainViewStyle
 import com.natsuyasai.lizardguiwrap.viewmodel.DirectorySelectEvent
 import com.natsuyasai.lizardguiwrap.viewmodel.MainViewModel
@@ -14,7 +15,7 @@ import tornadofx.*
 
 class MainView : View("lizard gui wrap") {
 
-    private val viewModel: MainViewModel by inject()
+    private val viewModel: MainViewModel = MainViewModel(FormParameters())
 
     @OptIn(DelicateCoroutinesApi::class)
     override val root: Parent = form {
@@ -25,7 +26,8 @@ class MainView : View("lizard gui wrap") {
                 addClass(MainViewStyle.text)
                 textfield(viewModel.filePath) {
                     addClass(MainViewStyle.text)
-                }
+                }.required()
+
                 button("select") {
                     action {
                         val dir = chooseDirectory(
@@ -62,7 +64,7 @@ class MainView : View("lizard gui wrap") {
                 addClass(MainViewStyle.text)
                 textfield(viewModel.outputFileName) {
                     addClass(MainViewStyle.text)
-                }
+                }.required()
             }
         }
         separator {
