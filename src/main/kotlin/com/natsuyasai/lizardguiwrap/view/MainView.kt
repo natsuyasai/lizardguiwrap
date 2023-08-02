@@ -22,11 +22,12 @@ class MainView : View("lizard gui wrap") {
         addClass(MainViewStyle.form)
         // フォルダ選択
         fieldset {
-            field("FilePath") {
+            field("Target Path") {
                 addClass(MainViewStyle.text)
                 textfield(viewModel.filePath) {
                     addClass(MainViewStyle.text)
-                }.required()
+                    required()
+                }
 
                 button("select") {
                     action {
@@ -64,7 +65,8 @@ class MainView : View("lizard gui wrap") {
                 addClass(MainViewStyle.text)
                 textfield(viewModel.outputFileName) {
                     addClass(MainViewStyle.text)
-                }.required()
+                    required()
+                }
             }
         }
         separator {
@@ -76,7 +78,9 @@ class MainView : View("lizard gui wrap") {
                 right {
                     button("exec") {
                         addClass(MainViewStyle.footerButton)
+                        enableWhen(viewModel.canExec)
                         action {
+                            viewModel.commit()
                             GlobalScope.launch(Dispatchers.IO) {
                                 val result = viewModel.execLizard()
                                 GlobalScope.launch(Dispatchers.Main) {

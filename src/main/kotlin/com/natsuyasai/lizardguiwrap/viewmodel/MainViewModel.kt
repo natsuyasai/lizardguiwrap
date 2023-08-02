@@ -6,15 +6,17 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import tornadofx.FXEvent
 import tornadofx.ItemViewModel
+import tornadofx.onChange
 
 class DirectorySelectEvent(val dir: String?) : FXEvent()
-class MainViewModel(private val parameters: FormParameters)
-    : ItemViewModel<FormParameters>(parameters) {
+class MainViewModel(private val parameters: FormParameters) : ItemViewModel<FormParameters>(parameters) {
 
     val filePath = bind(FormParameters::filePathProperty)
     val selectedLanguage = bind(FormParameters::selectedLanguageProperty)
     val selectedFormat = bind(FormParameters::selectedFormatProperty)
     val outputFileName = bind(FormParameters::outputFileNameProperty)
+
+    val canExec = bind(FormParameters::canExecProperty)
 
     val languageItems: ObservableList<String> = FXCollections.observableArrayList(
         Language.AUTO.langName,
@@ -50,17 +52,37 @@ class MainViewModel(private val parameters: FormParameters)
     init {
         // フォルダ選択イベント
         subscribe<DirectorySelectEvent> {
-            parameters.filePath = it.dir
+            parameters.filePath = it.dir ?: ""
+        }
+        filePath.onChange {
+            if (it.isNullOrBlank()) {
+                parameters.canExec = false
+            }
+            else if (outputFileName.value.isNotBlank()) {
+                parameters.canExec = true
+            }
+        }
+        outputFileName.onChange {
+            if (it.isNullOrBlank()) {
+                parameters.canExec = false
+            }
+            else if (filePath.value.isNotBlank()) {
+                parameters.canExec = true
+            }
         }
     }
 
     fun execLizard(): Boolean {
+        parameters.canExec = false
         val lizardCommand = LizardCommandCreator(
             parameters.filePath,
             parameters.selectedLanguage,
             parameters.selectedFormat,
-            parameters.outputFileName)
+            parameters.outputFileName
+        )
         val executor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
-        return executor.exec()
+        val ret = executor.exec()
+        parameters.canExec = true
+        return ret
     }
 }
