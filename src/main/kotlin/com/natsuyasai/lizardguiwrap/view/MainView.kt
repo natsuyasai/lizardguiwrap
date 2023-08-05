@@ -29,7 +29,7 @@ class MainView : View("lizard gui wrap") {
                     required()
                 }
 
-                button("select") {
+                button("Select") {
                     action {
                         val dir = chooseDirectory(
                             "Select Folder",
@@ -76,30 +76,42 @@ class MainView : View("lizard gui wrap") {
         fieldset {
             borderpane {
                 right {
-                    button("exec") {
-                        addClass(MainViewStyle.footerButton)
-                        enableWhen(viewModel.canExec)
-                        action {
-                            viewModel.commit()
-                            GlobalScope.launch(Dispatchers.IO) {
-                                val result = viewModel.execLizard()
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    if (result) {
-                                        alert(
-                                            Alert.AlertType.INFORMATION,
-                                            "Result",
-                                            content = "Completed",
-                                            title = "Info",
-                                            owner = this@MainView.currentWindow
-                                        )
-                                    } else {
-                                        alert(
-                                            Alert.AlertType.ERROR,
-                                            "Result",
-                                            content = "Failed",
-                                            title = "Error",
-                                            owner = this@MainView.currentWindow
-                                        )
+                    hbox {
+                        button("Cancel") {
+                            addClass(MainViewStyle.footerButton)
+                            enableWhen(viewModel.canCancel)
+                            hboxConstraints {
+                                marginRight = 8.0
+                            }
+                            action {
+                                viewModel.cancel()
+                            }
+                        }
+                        button("Exec") {
+                            addClass(MainViewStyle.footerButton)
+                            enableWhen(viewModel.canExec)
+                            action {
+                                viewModel.commit()
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    val result = viewModel.execLizard()
+                                    GlobalScope.launch(Dispatchers.Main) {
+                                        if (result) {
+                                            alert(
+                                                Alert.AlertType.INFORMATION,
+                                                "Result",
+                                                content = "Completed",
+                                                title = "Info",
+                                                owner = this@MainView.currentWindow
+                                            )
+                                        } else {
+                                            alert(
+                                                Alert.AlertType.ERROR,
+                                                "Result",
+                                                content = "Failed",
+                                                title = "Error",
+                                                owner = this@MainView.currentWindow
+                                            )
+                                        }
                                     }
                                 }
                             }

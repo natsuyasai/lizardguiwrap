@@ -20,4 +20,7 @@ class FormParameters {
 
     val canExecProperty = SimpleBooleanProperty(false)
     var canExec: Boolean by canExecProperty
+
+    val canCancelProperty = SimpleBooleanProperty(false)
+    var canCancel: Boolean by canCancelProperty
 }

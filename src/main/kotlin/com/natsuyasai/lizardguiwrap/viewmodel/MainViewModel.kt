@@ -17,6 +17,9 @@ class MainViewModel(private val parameters: FormParameters) : ItemViewModel<Form
     val outputFileName = bind(FormParameters::outputFileNameProperty)
 
     val canExec = bind(FormParameters::canExecProperty)
+    val canCancel = bind(FormParameters::canCancelProperty)
+
+    private var currentCommandExecutor: LizardCommandExecutor? = null
 
     val languageItems: ObservableList<String> = FXCollections.observableArrayList(
         Language.AUTO.langName,
@@ -72,17 +75,27 @@ class MainViewModel(private val parameters: FormParameters) : ItemViewModel<Form
         }
     }
 
+    /**
+     * コマンド実行
+     */
     fun execLizard(): Boolean {
         parameters.canExec = false
+        parameters.canCancel = true
         val lizardCommand = LizardCommandCreator(
             parameters.filePath,
             parameters.selectedLanguage,
             parameters.selectedFormat,
             parameters.outputFileName
         )
-        val executor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
-        val ret = executor.exec()
+        currentCommandExecutor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
+        val ret = currentCommandExecutor!!.exec()
         parameters.canExec = true
+        parameters.canCancel = false
+        currentCommandExecutor = null
         return ret
+    }
+
+    fun cancel() {
+        currentCommandExecutor?.cancel()
     }
 }
