@@ -22,7 +22,7 @@ ext {
 sourceCompatibility = '18'
 targetCompatibility = '18'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     // compileJavaタスクのエンコーディング
     compileJava.options.encoding = 'UTF-8'
