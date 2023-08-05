@@ -66,6 +66,9 @@ class MainView : View("lizard gui wrap") {
                 textfield(viewModel.outputFileName) {
                     addClass(MainViewStyle.text)
                     required()
+                    validator {
+                        if(viewModel.validateFileName()) null else error("The file name you entered cannot be used.")
+                    }
                 }
             }
         }

@@ -58,20 +58,10 @@ class MainViewModel(private val parameters: FormParameters) : ItemViewModel<Form
             parameters.filePath = it.dir ?: ""
         }
         filePath.onChange {
-            if (it.isNullOrBlank()) {
-                parameters.canExec = false
-            }
-            else if (outputFileName.value.isNotBlank()) {
-                parameters.canExec = true
-            }
+            onChangeFolderPath(it)
         }
         outputFileName.onChange {
-            if (it.isNullOrBlank()) {
-                parameters.canExec = false
-            }
-            else if (filePath.value.isNotBlank()) {
-                parameters.canExec = true
-            }
+            onChangeFileName(it)
         }
     }
 
@@ -97,5 +87,28 @@ class MainViewModel(private val parameters: FormParameters) : ItemViewModel<Form
 
     fun cancel() {
         currentCommandExecutor?.cancel()
+    }
+
+    fun validateFileName(): Boolean {
+        return FileNameValidator(outputFileName.value ?: "").validate()
+    }
+
+    private fun onChangeFolderPath(changedPath: String?) {
+        if (changedPath.isNullOrBlank()) {
+            parameters.canExec = false
+        } else if (outputFileName.value.isNotBlank()) {
+            parameters.canExec = true
+        }
+    }
+
+    private fun onChangeFileName(changedName: String?) {
+        if (changedName.isNullOrBlank()) {
+            parameters.canExec = false
+        } else if (filePath.value.isNotBlank()) {
+            parameters.canExec = true
+        }
+        if (!FileNameValidator(changedName ?: "").validate()) {
+            parameters.canExec = false
+        }
     }
 }

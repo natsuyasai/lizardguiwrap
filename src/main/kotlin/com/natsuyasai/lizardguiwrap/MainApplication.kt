@@ -7,16 +7,13 @@ import tornadofx.App
 import tornadofx.launch
 
 class MainApplication : App(MainView::class, MainViewStyle::class) {
-//    init {
-//        reloadStylesheetsOnFocus()
-//    }
-
     override fun start(stage: Stage) {
         with(stage) {
+            super.start(this)
             isResizable = false
             minWidth = 500.0
             minHeight = 310.0
-            super.start(this)
+            //FX.primaryStage.icons += Image("")
         }
     }
 }
