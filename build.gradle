@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'com.natsuyasai'
-version '0.1'
+version '0.9'
 
 repositories {
     mavenCentral()
@@ -19,8 +19,8 @@ ext {
     junitVersion = '5.9.2'
 }
 
-sourceCompatibility = '18'
-targetCompatibility = '18'
+sourceCompatibility = '11'
+targetCompatibility = '11'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
@@ -39,7 +39,7 @@ application {
 
 [compileKotlin, compileTestKotlin].forEach {
     it.kotlinOptions {
-        jvmTarget = '18'
+        jvmTarget = '11'
     }
 }
 
