@@ -5,10 +5,11 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+    id 'com.github.jk1.dependency-license-report' version '2.5'
 }
 
 group 'com.natsuyasai'
-version '0.1'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -18,10 +19,10 @@ ext {
     junitVersion = '5.9.2'
 }
 
-sourceCompatibility = '18'
-targetCompatibility = '18'
+sourceCompatibility = '11'
+targetCompatibility = '11'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     // compileJavaタスクのエンコーディング
     compileJava.options.encoding = 'UTF-8'
@@ -38,7 +39,7 @@ application {
 
 [compileKotlin, compileTestKotlin].forEach {
     it.kotlinOptions {
-        jvmTarget = '18'
+        jvmTarget = '11'
     }
 }
 
@@ -49,8 +50,10 @@ javafx {
 
 dependencies {
     implementation('org.controlsfx:controlsfx:11.1.2')
-    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+    //implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
     implementation('no.tornado:tornadofx:1.7.20')
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.7.2")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'

@@ -17,6 +17,10 @@ class LizardCommandExecutor(
             commandCreator.getOptions())
     }
 
+    fun cancel() {
+        processExecutor.cancel()
+    }
+
     private fun getTerminal(): String {
         return when {
             PlatformUtil.isWindows() -> "cmd"

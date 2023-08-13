@@ -2,19 +2,25 @@ package com.natsuyasai.lizardguiwrap.viewmodel
 
 
 import com.natsuyasai.lizardguiwrap.model.*
-import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import tornadofx.FXEvent
-import tornadofx.ViewModel
+import tornadofx.ItemViewModel
+import tornadofx.onChange
 
 class DirectorySelectEvent(val dir: String?) : FXEvent()
-class MainViewModel : ViewModel() {
+class MainViewModel(private val parameters: FormParameters) : ItemViewModel<FormParameters>(parameters) {
 
-    val filePath = SimpleStringProperty()
-    val selectedLanguage = SimpleStringProperty("Auto")
-    val selectedFormat = SimpleStringProperty("HTML")
-    val outputFileName = SimpleStringProperty("result")
+    val filePath = bind(FormParameters::filePathProperty)
+    val selectedLanguage = bind(FormParameters::selectedLanguageProperty)
+    val selectedFormat = bind(FormParameters::selectedFormatProperty)
+    val outputFileName = bind(FormParameters::outputFileNameProperty)
+    val moreParameters = bind(FormParameters::moreParametersProperty)
+
+    val canExec = bind(FormParameters::canExecProperty)
+    val canCancel = bind(FormParameters::canCancelProperty)
+
+    private var currentCommandExecutor: LizardCommandExecutor? = null
 
     val languageItems: ObservableList<String> = FXCollections.observableArrayList(
         Language.AUTO.langName,
@@ -50,17 +56,61 @@ class MainViewModel : ViewModel() {
     init {
         // フォルダ選択イベント
         subscribe<DirectorySelectEvent> {
-            filePath.value = it.dir
+            parameters.filePath = it.dir ?: ""
+        }
+        filePath.onChange {
+            onChangeFolderPath(it)
+        }
+        outputFileName.onChange {
+            onChangeFileName(it)
         }
     }
 
+    /**
+     * コマンド実行
+     */
     fun execLizard(): Boolean {
+        parameters.canExec = false
+        parameters.canCancel = true
         val lizardCommand = LizardCommandCreator(
-            filePath.value,
-            selectedLanguage.value,
-            selectedFormat.value,
-            outputFileName.value)
-        val executor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
-        return executor.exec()
+            parameters.filePath,
+            parameters.selectedLanguage,
+            parameters.selectedFormat,
+            parameters.outputFileName,
+            parameters.moreParameters
+        )
+        currentCommandExecutor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
+        val ret = currentCommandExecutor!!.exec()
+        parameters.canExec = true
+        parameters.canCancel = false
+        currentCommandExecutor = null
+        return ret
+    }
+
+    fun cancel() {
+        currentCommandExecutor?.cancel()
+    }
+
+    fun validateFileName(): Boolean {
+        return FileNameValidator(outputFileName.value ?: "").validate()
+    }
+
+    private fun onChangeFolderPath(changedPath: String?) {
+        if (changedPath.isNullOrBlank()) {
+            parameters.canExec = false
+        } else if (outputFileName.value.isNotBlank()) {
+            parameters.canExec = true
+        }
+    }
+
+    private fun onChangeFileName(changedName: String?) {
+        if (changedName.isNullOrBlank()) {
+            parameters.canExec = false
+        } else if (filePath.value.isNotBlank()) {
+            parameters.canExec = true
+        }
+        if (!FileNameValidator(changedName ?: "").validate()) {
+            parameters.canExec = false
+        }
     }
 }

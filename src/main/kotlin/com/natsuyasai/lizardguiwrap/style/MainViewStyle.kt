@@ -1,6 +1,9 @@
 package com.natsuyasai.lizardguiwrap.style
 
-import tornadofx.*
+import tornadofx.Stylesheet
+import tornadofx.box
+import tornadofx.cssclass
+import tornadofx.px
 
 class MainViewStyle : Stylesheet() {
 
@@ -35,7 +38,7 @@ class MainViewStyle : Stylesheet() {
 
         footerButton {
             fontSize = 14.px
-            prefWidth = 120.px
+            prefWidth = 80.px
             prefHeight = 32.px
         }
 

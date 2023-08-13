@@ -3,12 +3,14 @@
 package com.natsuyasai.lizardguiwrap.model
 
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.mockito.Mockito.mock
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 class LizardCommandExecutorTest {
 
@@ -25,9 +27,9 @@ class LizardCommandExecutorTest {
     }
 
     @Test
-    fun Windows環境でのコマンド実行確認() {
+    fun Windows環境の場合にWindows用のコマンドを実行すること() {
         System.setProperty("os.name", "Windows")
-        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result", "")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -39,9 +41,9 @@ class LizardCommandExecutorTest {
     }
 
     @Test
-    fun Mac環境でのコマンド実行確認() {
+    fun Mac環境の場合にMac用のコマンドを実行すること() {
         System.setProperty("os.name", "Macos")
-        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result", "")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -49,13 +51,13 @@ class LizardCommandExecutorTest {
 
         assertEquals(true, ret)
         verify(processExecutor, times(1))
-            .exec("sh", "-c", "command/basecommand.sh", "/home/src --html -o result.html")
+            .exec("", "", "command/basecommand.sh", "/home/src --html -o result.html")
     }
 
     @Test
-    fun Linux環境でのコマンド実行確認() {
+    fun Linux環境の場合にLinux用のコマンドを実行すること() {
         System.setProperty("os.name", "Linux")
-        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result", "")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 

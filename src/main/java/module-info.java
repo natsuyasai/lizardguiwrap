@@ -4,8 +4,9 @@ module com.natsuyasai.lizardguiwrap {
     requires kotlin.stdlib;
 
     requires org.controlsfx.controls;
-    requires org.kordamp.bootstrapfx.core;
+    //requires org.kordamp.bootstrapfx.core;
     requires tornadofx;
+    requires kotlinx.coroutines.core;
 
     opens com.natsuyasai.lizardguiwrap to javafx.fxml;
     exports com.natsuyasai.lizardguiwrap;
