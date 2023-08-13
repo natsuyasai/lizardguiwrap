@@ -76,7 +76,8 @@ class MainViewModel(private val parameters: FormParameters) : ItemViewModel<Form
             parameters.filePath,
             parameters.selectedLanguage,
             parameters.selectedFormat,
-            parameters.outputFileName
+            parameters.outputFileName,
+            parameters.moreParameters
         )
         currentCommandExecutor = LizardCommandExecutor(RuntimeWrapper(), lizardCommand)
         val ret = currentCommandExecutor!!.exec()

@@ -4,23 +4,27 @@ class LizardCommandCreator(
     private val folderPath: String,
     private val language: String,
     private val format: String,
-    private val fileName: String
+    private val fileName: String,
+    private val moreParameters: String
 ) {
 
     fun getOptions(): String {
         var retOptionsStr = "$folderPath "
         val formatOpt = convertOptionForFormat()
         var extension = ".txt"
-        if (formatOpt != "") {
-            retOptionsStr += "--${formatOpt} "
+        if (formatOpt.isNotBlank()) {
+            retOptionsStr += "--${formatOpt}"
             extension = ".${formatOpt}"
         }
         val langOpt = convertOptionForLanguage()
-        if (langOpt != ""){
-            retOptionsStr += "-l $langOpt "
+        if (langOpt.isNotBlank()) {
+            retOptionsStr += " -l $langOpt"
         }
-        if (fileName != ""){
-            retOptionsStr += "-o ${fileName}${extension}"
+        if (fileName.isNotBlank()) {
+            retOptionsStr += " -o ${fileName}${extension}"
+        }
+        if (moreParameters.isNotBlank()) {
+            retOptionsStr += " $moreParameters"
         }
         return retOptionsStr
     }

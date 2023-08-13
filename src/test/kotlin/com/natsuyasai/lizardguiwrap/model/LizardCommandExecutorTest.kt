@@ -29,7 +29,7 @@ class LizardCommandExecutorTest {
     @Test
     fun Windows環境の場合にWindows用のコマンドを実行すること() {
         System.setProperty("os.name", "Windows")
-        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result", "")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -43,7 +43,7 @@ class LizardCommandExecutorTest {
     @Test
     fun Mac環境の場合にMac用のコマンドを実行すること() {
         System.setProperty("os.name", "Macos")
-        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result", "")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
@@ -57,7 +57,7 @@ class LizardCommandExecutorTest {
     @Test
     fun Linux環境の場合にLinux用のコマンドを実行すること() {
         System.setProperty("os.name", "Linux")
-        val commandCreator = LizardCommandCreator("/home/src","","HTML","result")
+        val commandCreator = LizardCommandCreator("/home/src","","HTML","result", "")
         val target = LizardCommandExecutor(processExecutor, commandCreator)
         whenever(processExecutor.exec(any(), any(), any(), any())).thenReturn(true)
 
