@@ -72,6 +72,16 @@ class MainView : View("lizard gui wrap") {
                 }
             }
         }
+        // 追加のパラメータ
+        fieldset {
+            field("More Parameter") {
+                addClass(MainViewStyle.text)
+                textfield(viewModel.moreParameters) {
+                    addClass(MainViewStyle.text)
+                    promptText = "-h --version"
+                }
+            }
+        }
         separator {
             addClass(MainViewStyle.separator)
         }

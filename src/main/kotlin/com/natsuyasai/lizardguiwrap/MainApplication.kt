@@ -12,7 +12,7 @@ class MainApplication : App(MainView::class, MainViewStyle::class) {
             super.start(this)
             isResizable = false
             minWidth = 500.0
-            minHeight = 310.0
+            minHeight = 400.0
             //FX.primaryStage.icons += Image("")
         }
     }

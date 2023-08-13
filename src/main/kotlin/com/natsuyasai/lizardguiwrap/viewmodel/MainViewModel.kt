@@ -15,6 +15,7 @@ class MainViewModel(private val parameters: FormParameters) : ItemViewModel<Form
     val selectedLanguage = bind(FormParameters::selectedLanguageProperty)
     val selectedFormat = bind(FormParameters::selectedFormatProperty)
     val outputFileName = bind(FormParameters::outputFileNameProperty)
+    val moreParameters = bind(FormParameters::moreParametersProperty)
 
     val canExec = bind(FormParameters::canExecProperty)
     val canCancel = bind(FormParameters::canCancelProperty)

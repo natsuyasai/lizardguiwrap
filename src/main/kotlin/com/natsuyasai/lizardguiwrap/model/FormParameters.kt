@@ -18,6 +18,9 @@ class FormParameters {
     val outputFileNameProperty = SimpleStringProperty("result")
     var outputFileName: String by outputFileNameProperty
 
+    val moreParametersProperty = SimpleStringProperty("")
+    var moreParameters: String by moreParametersProperty
+
     val canExecProperty = SimpleBooleanProperty(false)
     var canExec: Boolean by canExecProperty
 
